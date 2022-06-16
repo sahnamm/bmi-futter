@@ -1,56 +1,53 @@
 import 'dart:math';
 
 import 'package:bmi/constants/constant.dart';
+import 'package:bmi/models/bmi_model.dart';
+import 'package:bmi/models/human_model.dart';
 
 class BmiCalculator {
-  int? height;
-  int? weight;
-  double? bmi;
-  String? bmiCategory;
-  String? bmiDescription;
+  HumanModel? humanModel;
+  BmiModel? bmiModel;
 
   BmiCalculator({
-    required this.height,
-    required this.weight,
+    required this.humanModel,
   });
 
-  BmiCalculator.fromBmiValue(this.bmi) {
-    // this.bmi = bmi;
+  BmiCalculator.fromBmiValue(value) {
+    bmiModel = BmiModel.setAll(bmi: value);
   }
 
-  double calculateBMI() {
-    double heightInMeter = height! / 100;
+  calculateBMI() {
+    double heightInMeter = humanModel!.height! / 100;
     final h = pow(heightInMeter, 2);
-    bmi = weight! / h;
-    return bmi!;
+    var bmi = humanModel!.weight! / h;
+    bmiModel = BmiModel.setAll(bmi: bmi);
   }
 
-  String determineBmiCategory() {
+  determineBmiCategory() {
     String category = "";
-    if (bmi! < 16.0) {
+    if (bmiModel!.bmi! < 16.0) {
       category = underweightSevere;
-    } else if (bmi! < 17) {
+    } else if (bmiModel!.bmi! < 17) {
       category = underweightModerate;
-    } else if (bmi! < 18.5) {
+    } else if (bmiModel!.bmi! < 18.5) {
       category = underweightMild;
-    } else if (bmi! < 25) {
+    } else if (bmiModel!.bmi! < 25) {
       category = normal;
-    } else if (bmi! < 30) {
+    } else if (bmiModel!.bmi! < 30) {
       category = overweight;
-    } else if (bmi! < 35) {
+    } else if (bmiModel!.bmi! < 35) {
       category = obeseI;
-    } else if (bmi! < 40) {
+    } else if (bmiModel!.bmi! < 40) {
       category = obeseII;
-    } else if (bmi! >= 40) {
+    } else if (bmiModel!.bmi! >= 40) {
       category = obeseIII;
     }
-    bmiCategory = category;
-    return bmiCategory!;
+    bmiModel!.bmiCategory = category;
   }
 
-  String getHealthRiskDescription() {
+  getHealthRiskDescription() {
     String desc = "";
-    switch (bmiCategory!) {
+    switch (bmiModel!.bmiCategory!) {
       case underweightSevere:
       case underweightModerate:
       case underweightMild:
@@ -71,7 +68,6 @@ class BmiCalculator {
         break;
       default:
     }
-    bmiDescription = desc;
-    return bmiDescription!;
+    bmiModel!.bmiDescription = desc;
   }
 }

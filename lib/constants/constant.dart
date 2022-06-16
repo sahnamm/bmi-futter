@@ -32,3 +32,17 @@ const String overweight = "Overweight";
 const String obeseI = "Obese (Class I)";
 const String obeseII = "Obese (Class II)";
 const String obeseIII = "Obese (Class III)";
+
+const String genderMale = "Male";
+const String genderFemale = "Female";
+
+const String labelHeight = "HEIGHT";
+const String labelHeightUnit = "cm";
+const String labelWeight = "WEIGHT";
+const String labelWeightUnit = "kg";
+const String labelAge = "AGE";
+const String labelAgeUnit = "y.o.";
+
+const String dataScreenButton = "Calculate";
+const String resultScreenButton = "Re-Calculate";
+const String resultTitle = "Your Result";

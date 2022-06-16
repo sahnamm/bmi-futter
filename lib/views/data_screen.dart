@@ -1,6 +1,8 @@
 import 'package:bmi/constants/constant.dart';
+import 'package:bmi/enums/enum.dart';
 import 'package:bmi/helpers/bmi_calculator.dart';
-import 'package:bmi/screen/result_screen.dart';
+import 'package:bmi/models/human_model.dart';
+import 'package:bmi/views/result_screen.dart';
 import 'package:bmi/widgets/bmi_card.dart';
 import 'package:bmi/widgets/custom_bottom_navigator.dart';
 import 'package:bmi/widgets/custom_gender_card.dart';
@@ -15,27 +17,27 @@ class Datascreen extends StatefulWidget {
 }
 
 class _DatascreenState extends State<Datascreen> {
-  int height = 100;
-  int weight = 50;
-  int age = 20;
-  String? gender;
+  HumanModel? human;
+  @override
+  void initState() {
+    super.initState();
+    human = HumanModel(height: 100, weight: 100, age: 20);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: defaultAppBar,
       bottomNavigationBar: CustomBottomNavigator(
-        title: "Calculate",
+        title: dataScreenButton,
         onTap: () {
-          final bmiCalculator = BmiCalculator(height: height, weight: weight);
+          final bmiCalculator = BmiCalculator(humanModel: human!);
           bmiCalculator.calculateBMI();
-          print(
-              "You are a $gender. Height: $height. Weight: $weight. Age: $age. Your BMI is ${bmiCalculator.bmi}");
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
                 return ResultScreen(
-                  bmi: bmiCalculator.bmi!,
+                  bmi: bmiCalculator.bmiModel!.bmi!,
                 );
               },
             ),
@@ -52,22 +54,22 @@ class _DatascreenState extends State<Datascreen> {
                 Expanded(
                   child: CustomGenderCard(
                     onTap: () {
-                      gender = "male";
+                      human?.gender = Gender.male;
                       setState(() {});
                     },
-                    isChosen: gender == "male",
-                    title: "Male",
+                    isChosen: human?.gender == Gender.male,
+                    title: genderMale,
                     iconData: Icons.male,
                   ),
                 ),
                 Expanded(
                   child: CustomGenderCard(
                     onTap: () {
-                      gender = "female";
+                      human?.gender = Gender.female;
                       setState(() {});
                     },
-                    isChosen: gender == "female",
-                    title: "Female",
+                    isChosen: human?.gender == Gender.female,
+                    title: genderFemale,
                     iconData: Icons.female,
                   ),
                 ),
@@ -77,7 +79,7 @@ class _DatascreenState extends State<Datascreen> {
             //HEIGHT
             Column(
               children: [
-                const Text("HEIGHT", style: boldLabelTextStyle),
+                const Text(labelHeight, style: boldLabelTextStyle),
                 Row(
                   children: [
                     Expanded(
@@ -86,11 +88,11 @@ class _DatascreenState extends State<Datascreen> {
                         child: Slider(
                           min: 80,
                           max: 200,
-                          value: height.toDouble(),
+                          value: human!.height!.toDouble(),
                           thumbColor: primaryColor,
                           activeColor: primaryColor,
                           onChanged: (value) {
-                            height = value.toInt();
+                            human?.height = value.toInt();
                             setState(() {});
                           },
                         ),
@@ -109,11 +111,11 @@ class _DatascreenState extends State<Datascreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "$height",
+                                human!.height.toString(),
                                 style: labelTextStyle,
                               ),
                               const Text(
-                                " cm",
+                                " $labelHeightUnit",
                                 style: labelTextStyle,
                               ),
                             ],
@@ -132,12 +134,12 @@ class _DatascreenState extends State<Datascreen> {
                 //WEIGHT
                 Expanded(
                   child: CustomPicker(
-                    title: "WEIGHT",
-                    unitLabel: "kg",
+                    title: labelWeight,
+                    unitLabel: labelWeightUnit,
                     start: 20,
                     end: 220,
                     onSelectedItemChanged: (value) {
-                      weight = value + 20;
+                      human?.weight = value + 20;
                       setState(() {});
                     },
                   ),
@@ -145,12 +147,12 @@ class _DatascreenState extends State<Datascreen> {
                 //AGE
                 Expanded(
                   child: CustomPicker(
-                    title: "AGE",
-                    unitLabel: "y.o.",
+                    title: labelAge,
+                    unitLabel: labelAgeUnit,
                     start: 15,
                     end: 90,
                     onSelectedItemChanged: (value) {
-                      weight = value + 20;
+                      human?.weight = value + 20;
                       setState(() {});
                     },
                   ),

@@ -1,5 +1,5 @@
 import 'package:bmi/constants/constant.dart';
-import 'package:bmi/screen/data_screen.dart';
+import 'package:bmi/views/data_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

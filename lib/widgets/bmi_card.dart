@@ -18,7 +18,7 @@ class BmiCard extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(-2, -2),
+              offset: const Offset(-2, -2),
               blurRadius: 20,
               color: Colors.black.withOpacity(0.1),
             ),

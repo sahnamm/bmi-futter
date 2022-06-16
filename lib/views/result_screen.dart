@@ -20,7 +20,7 @@ class ResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: defaultAppBar,
       bottomNavigationBar: CustomBottomNavigator(
-        title: "Re-Calculate",
+        title: resultScreenButton,
         onTap: () {
           Navigator.of(context).pop();
         },
@@ -30,7 +30,7 @@ class ResultScreen extends StatelessWidget {
           const Expanded(
             child: Center(
               child: Text(
-                "Your Result",
+                resultTitle,
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class ResultScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      bmiCalculator.bmiCategory!,
+                      bmiCalculator.bmiModel!.bmiCategory!,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class ResultScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      bmiCalculator.bmiDescription!,
+                      bmiCalculator.bmiModel!.bmiDescription!,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 20,
